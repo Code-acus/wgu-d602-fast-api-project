@@ -1,7 +1,9 @@
-from operator import truediv
 import uvicorn
 from fastapi import FastAPI
 from schemas import load_db
+from schemas import Car
+from fastapi import HTTPException
+from schemas import save_db
 
 app = FastAPI()
 
@@ -24,6 +26,11 @@ def get_car_by_id(id):
         return result[0]
     else:
         raise HTTPException(status_code=404, detail="Not found")
+
+@app.post("/api/cars")
+def add_car(car: Car):
+    db.append(car)
+    save_db(db)
 
 if __name__ == "__main__":
     uvicorn.run("carsharing:app", reload=True)
