@@ -1,7 +1,6 @@
 import json
 from pydantic import BaseModel
 
-# The effect of this is a like jangled models
 class Car(BaseModel):
     id: int
     size: str
@@ -10,9 +9,8 @@ class Car(BaseModel):
     transmission: str | None = "auto"
 
 def load_db() -> list[Car]:
-    """ Load the database from a JSON file """
+    """Load the database from a JSON file."""
     with open("cars.json") as f:
-        # This simulates a database
         return [Car.model_validate(obj) for obj in json.load(f)]
 
 def save_db(cars: list[Car]):
